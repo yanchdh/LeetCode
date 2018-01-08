@@ -1,4 +1,4 @@
-
+# -*- coding:utf-8 -*-
 #https://leetcode.com/problems/two-sum/description/
 class Solution(object):
     def twoSum(self, nums, target):
