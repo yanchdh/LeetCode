@@ -7,12 +7,12 @@ class Solution(object):
         :type numRows: int
         :rtype: str
         """
-        if numRows == 1:
+        lens = len(s)
+        if lens <= numRows or numRows == 1:
             return s
         n = 2 * numRows - 2
         ret = []
         lists = list(s)
-        lens = len(s)
         ret.extend(lists[::n])
         for i in range(1, numRows - 1):
             j, k = i, n - 2 * i
