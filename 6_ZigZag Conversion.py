@@ -12,13 +12,14 @@ class Solution(object):
             return s
         n = 2 * numRows - 2
         ret = []
-        lists = list(s)
-        ret.extend(lists[::n])
+        ret.extend(s[::n])
         for i in range(1, numRows - 1):
-            j, k = i, n - 2 * i
-            while j < lens:
-                ret.append(lists[j])
-                j += k
-                k = n - k
-        ret.extend(lists[numRows - 1::n])
+            k = n - 2 * i
+            for j in range(i, lens, n):
+                ret.append(s[j])
+                try:
+                    ret.append(s[j+k])
+                except:
+                    break
+        ret.extend(s[numRows - 1::n])
         return ''.join(ret)
