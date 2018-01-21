@@ -9,14 +9,10 @@ class Solution(object):
         l, r = 0, len(height) - 1
         ret = 0
         while l < r:
-            ret = max(ret, min(height[l], height[r]) * (r - l))
-            diff = height[l] - height[r]
-            if diff <= 0:
+            if height[l] < height[r]:
+                ret = max(ret, height[l] * (r - l))
                 l += 1
-                while l < r and height[l] <= height[l - 1]:
-                    l += 1
-            if diff >= 0:
+            else:
+                ret = max(ret, height[r] * (r - l))
                 r -= 1
-                while l < r and height[r] <= height[r + 1]:
-                    r -= 1
         return ret
