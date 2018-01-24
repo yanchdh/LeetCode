@@ -6,6 +6,7 @@ class Solution(object):
         :type nums: List[int]
         :type target: int
         :rtype: int
+        :algorithm: dp
         """
         nums.sort()
         ret, lenn = sum(nums[:3]), len(nums)
