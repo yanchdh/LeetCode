@@ -5,6 +5,7 @@ class Solution(object):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
+        :algorithm: dp
         """
         nums.sort()
         ret, lenn = [], len(nums)
