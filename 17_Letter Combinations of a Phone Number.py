@@ -12,6 +12,7 @@ class Solution(object):
         """
         :type digits: str
         :rtype: List[str]
+        :algorithm: dfs
         """
         return self.combination(digits, 0, [])
     
