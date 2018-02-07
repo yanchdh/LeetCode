@@ -9,26 +9,32 @@ class Solution(object):
         """
         if not words:
             return []
-        ret, lens, lenw = [], len(s), len(words)
-        wd, l = {}, [0]
+        ret, lens, lenword, lenwords = [], len(s), len(words[0]), len(words)
+        wd, wl = {}, []
         for word in words:
-            l.append(l[-1] + len(word))
-            wd[word] = wd.get(word, 0) + 1
-        for i in range(lens - l[-1] + 1):
-            if s[i+l[0]:i+l[1]] not in wd:
-                continue
-            copy = wd.copy()
-            j = 0
-            while j < lenw:
-                ss = s[i+l[j]:i+l[j+1]]
-                v = copy.get(ss)
-                if not v:
-                    break
-                elif v == 1:
-                    copy.pop(ss)
-                else:
-                    copy[ss] = v - 1
-                j += 1
-            if not copy:
+            j = wd.get(word)
+            if j is None:
+                wd[word] = len(wl)
+                wl.append(1)
+            else:
+                wl[j] += 1
+        
+        sl, il, nl = [], [], [0 for i in range(lenword)]
+        for i in range(lens - lenword + 1):
+            sl.append(wd.get(s[i : i + lenword]))
+            if sl[-1] is not None:
+                nl[i % lenword] += 1
+                if nl[i % lenword] >= lenwords:
+                    il.append(i - lenword * (lenwords - 1))
+            else:
+                nl[i % lenword] = 0
+        
+        for i in il:
+            j, k = i, i + lenword * lenwords
+            copy = wl[:]
+            while j < k and copy[sl[j]]:
+                copy[sl[j]] -= 1
+                j += lenword
+            if j >= k:
                 ret.append(i)
         return ret
