@@ -16,12 +16,12 @@ class Solution(object):
         if nums[m] == target:
             return m
         if nums[l] <= nums[m]:
-            if nums[l] <= target and target <= nums[m]:
+            if nums[l] <= target < nums[m]:
                 return self.binarySearch(nums, target, l, m - 1)
             else:
                 return self.binarySearch(nums, target, m + 1, r)
         else:
-            if nums[m] <= target and target <= nums[r]:
+            if nums[m] < target <= nums[r]:
                 return self.binarySearch(nums, target, m + 1, r)
             else:
                 return self.binarySearch(nums, target, l, m - 1)
