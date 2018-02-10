@@ -7,34 +7,27 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[int]
         """
+        ret = []
         if not words:
-            return []
-        ret, lens, lenword, lenwords = [], len(s), len(words[0]), len(words)
-        wd, wl = {}, []
+            return ret
+        len_s, len_words, len_word = len(s), len(words), len(words[0])
+        dict_word = {}
         for word in words:
-            j = wd.get(word)
-            if j is None:
-                wd[word] = len(wl)
-                wl.append(1)
-            else:
-                wl[j] += 1
-        
-        sl, il, nl = [], [], [0 for i in range(lenword)]
-        for i in range(lens - lenword + 1):
-            sl.append(wd.get(s[i : i + lenword]))
-            if sl[-1] is not None:
-                nl[i % lenword] += 1
-                if nl[i % lenword] >= lenwords:
-                    il.append(i - lenword * (lenwords - 1))
-            else:
-                nl[i % lenword] = 0
-        
-        for i in il:
-            j, k = i, i + lenword * lenwords
-            copy = wl[:]
-            while j < k and copy[sl[j]]:
-                copy[sl[j]] -= 1
-                j += lenword
-            if j >= k:
-                ret.append(i)
+            dict_word[word] = dict_word.get(word, 0) + 1
+        for i in range(len_word):
+            begin, end = i, i
+            dict_curr = {}
+            while end + len_word <= len_s:
+                curr = s[end : end + len_word]
+                end += len_word
+                if curr not in dict_word:
+                    begin = end
+                    dict_curr = {}
+                else:
+                    dict_curr[curr] = dict_curr.get(curr, 0) + 1
+                    while dict_curr[curr] > dict_word[curr]:
+                        dict_curr[s[begin : begin + len_word]] -= 1
+                        begin += len_word
+                    if begin + len_words * len_word == end:
+                        ret.append(begin)
         return ret
